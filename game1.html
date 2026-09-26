@@ -4679,6 +4679,19 @@ function createBin(
     );
 
 
+    const binOutlineMaterial =
+        new THREE.LineBasicMaterial({
+            color:
+                0x090909,
+            transparent:
+                true,
+            opacity:
+                0.86,
+            depthWrite:
+                false
+        });
+
+
     group.traverse(
 
         object => {
@@ -4695,6 +4708,33 @@ function createBin(
 
                 object.receiveShadow =
                     true;
+
+
+                if (
+                    object !==
+                    categoryLogo
+                ) {
+
+
+                    const outline =
+                        new THREE.LineSegments(
+                            new THREE.EdgesGeometry(
+                                object.geometry,
+                                38
+                            ),
+                            binOutlineMaterial
+                        );
+
+
+                    outline.renderOrder =
+                        2;
+
+
+                    object.add(
+                        outline
+                    );
+
+                }
 
             }
 
@@ -8971,7 +9011,7 @@ const THROW_CHARGE_REFERENCE_TIME =
 
 
 const MIN_THROW_LIFT =
-    1.5;
+    4.2;
 
 
 const MAX_THROW_CHARGE_TIME =
@@ -15068,7 +15108,9 @@ function updateThrownGarbage(
             )
             .addScaledVector(
                 collision.normal,
-                0.025
+                collidedBin
+                    ? 0.07
+                    : 0.025
             );
 
 
@@ -15136,10 +15178,10 @@ function updateThrownGarbage(
 
 
         /*
-            Bin rims and open lids are not resting surfaces. If
-            an item loses most of its speed on the upper frame,
-            slide it toward the real opening so it cannot freeze
-            or jitter forever on top of the bin.
+            Bin rims, lids and corners are not resting surfaces.
+            A slow top hit slides toward the opening; a slow side
+            or lower-corner hit is pushed outward. This prevents
+            an item being pinched forever between two colliders.
         */
         const hitBinTop =
             collidedBin &&
@@ -15148,57 +15190,92 @@ function updateThrownGarbage(
             0.2;
 
 
-        if (
-            hitBinTop &&
+        const binHorizontalSpeed =
             Math.hypot(
                 projectileVelocity.x,
                 projectileVelocity.z
-            ) < 1.6
+            );
+
+
+        if (
+            collidedBin &&
+            binHorizontalSpeed < 2.4
         ) {
 
 
-            const slideDirection =
+            const escapeDirection =
                 new THREE.Vector3(
-                    collidedBin.center.x -
-                    thrownGarbage.position.x,
+                    hitBinTop
+                        ? collidedBin.center.x -
+                            thrownGarbage.position.x
+                        : thrownGarbage.position.x -
+                            collidedBin.center.x,
                     0,
-                    collidedBin.center.z -
-                    thrownGarbage.position.z
+                    hitBinTop
+                        ? collidedBin.center.z -
+                            thrownGarbage.position.z
+                        : thrownGarbage.position.z -
+                            collidedBin.center.z
                 );
 
 
             if (
-                slideDirection.lengthSq() <
+                escapeDirection.lengthSq() <
                 0.0001
             ) {
 
 
-                slideDirection.set(
+                escapeDirection.set(
+                    collision.normal.x,
                     0,
-                    0,
-                    -1
+                    collision.normal.z
                 );
+
+
+                if (
+                    escapeDirection.lengthSq() <
+                    0.0001
+                ) {
+
+
+                    escapeDirection.set(
+                        0,
+                        0,
+                        -1
+                    );
+
+                }
 
             }
 
 
-            slideDirection.normalize();
+            escapeDirection.normalize();
 
 
             projectileVelocity.x +=
-                slideDirection.x *
-                1.8;
+                escapeDirection.x *
+                (
+                    hitBinTop
+                        ? 2.15
+                        : 2.45
+                );
 
 
             projectileVelocity.z +=
-                slideDirection.z *
-                1.8;
+                escapeDirection.z *
+                (
+                    hitBinTop
+                        ? 2.15
+                        : 2.45
+                );
 
 
             projectileVelocity.y =
                 Math.max(
                     projectileVelocity.y,
-                    0.48
+                    hitBinTop
+                        ? 0.62
+                        : 0.34
                 );
 
         }
