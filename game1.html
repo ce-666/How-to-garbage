@@ -703,7 +703,7 @@
         TIME:
 
         <span id="timer">
-            10.0
+            20.0
         </span>s
 
     </div>
@@ -3613,6 +3613,468 @@ function createTextSprite(
 const bins = [];
 
 
+function createBinCategoryLogo(
+    type
+) {
+
+
+    const canvas =
+        document.createElement(
+            "canvas"
+        );
+
+
+    canvas.width =
+        256;
+
+
+    canvas.height =
+        256;
+
+
+    const context =
+        canvas.getContext(
+            "2d"
+        );
+
+
+    context.clearRect(
+        0,
+        0,
+        256,
+        256
+    );
+
+
+    context.fillStyle =
+        "rgba(255, 255, 255, 0.96)";
+
+
+    context.strokeStyle =
+        "#111111";
+
+
+    context.lineWidth =
+        12;
+
+
+    context.beginPath();
+
+
+    context.arc(
+        128,
+        128,
+        106,
+        0,
+        Math.PI * 2
+    );
+
+
+    context.fill();
+
+
+    context.stroke();
+
+
+    context.fillStyle =
+        "#15191b";
+
+
+    context.strokeStyle =
+        "#15191b";
+
+
+    context.lineCap =
+        "round";
+
+
+    context.lineJoin =
+        "round";
+
+
+    if (
+        type ===
+        "recyclable"
+    ) {
+
+
+        context.lineWidth =
+            18;
+
+
+        const recyclePoints = [
+            [128, 62, 184, 153],
+            [184, 153, 78, 153],
+            [78, 153, 128, 62]
+        ];
+
+
+        for (
+            const segment of
+            recyclePoints
+        ) {
+
+
+            context.beginPath();
+
+
+            context.moveTo(
+                segment[0],
+                segment[1]
+            );
+
+
+            context.lineTo(
+                segment[2],
+                segment[3]
+            );
+
+
+            context.stroke();
+
+
+            const angle =
+                Math.atan2(
+                    segment[3] - segment[1],
+                    segment[2] - segment[0]
+                );
+
+
+            context.beginPath();
+
+
+            context.moveTo(
+                segment[2],
+                segment[3]
+            );
+
+
+            context.lineTo(
+                segment[2] -
+                Math.cos(angle - 0.72) * 30,
+                segment[3] -
+                Math.sin(angle - 0.72) * 30
+            );
+
+
+            context.lineTo(
+                segment[2] -
+                Math.cos(angle + 0.72) * 30,
+                segment[3] -
+                Math.sin(angle + 0.72) * 30
+            );
+
+
+            context.closePath();
+
+
+            context.fill();
+
+        }
+
+    }
+
+    else if (
+        type ===
+        "hazardous"
+    ) {
+
+
+        context.lineWidth =
+            15;
+
+
+        context.beginPath();
+
+
+        context.moveTo(
+            128,
+            54
+        );
+
+
+        context.lineTo(
+            199,
+            184
+        );
+
+
+        context.lineTo(
+            57,
+            184
+        );
+
+
+        context.closePath();
+
+
+        context.stroke();
+
+
+        context.lineWidth =
+            16;
+
+
+        context.beginPath();
+
+
+        context.moveTo(
+            128,
+            92
+        );
+
+
+        context.lineTo(
+            128,
+            142
+        );
+
+
+        context.stroke();
+
+
+        context.beginPath();
+
+
+        context.arc(
+            128,
+            163,
+            9,
+            0,
+            Math.PI * 2
+        );
+
+
+        context.fill();
+
+    }
+
+    else if (
+        type ===
+        "food"
+    ) {
+
+
+        context.beginPath();
+
+
+        context.moveTo(
+            128,
+            91
+        );
+
+
+        context.bezierCurveTo(
+            91,
+            65,
+            58,
+            98,
+            71,
+            145
+        );
+
+
+        context.bezierCurveTo(
+            83,
+            190,
+            111,
+            196,
+            128,
+            177
+        );
+
+
+        context.bezierCurveTo(
+            145,
+            196,
+            173,
+            190,
+            185,
+            145
+        );
+
+
+        context.bezierCurveTo(
+            198,
+            98,
+            165,
+            65,
+            128,
+            91
+        );
+
+
+        context.fill();
+
+
+        context.lineWidth =
+            12;
+
+
+        context.beginPath();
+
+
+        context.moveTo(
+            128,
+            88
+        );
+
+
+        context.lineTo(
+            135,
+            58
+        );
+
+
+        context.stroke();
+
+
+        context.beginPath();
+
+
+        context.ellipse(
+            158,
+            65,
+            25,
+            11,
+            -0.48,
+            0,
+            Math.PI * 2
+        );
+
+
+        context.fill();
+
+    }
+
+    else {
+
+
+        context.fillRect(
+            82,
+            91,
+            92,
+            102
+        );
+
+
+        context.fillRect(
+            69,
+            69,
+            118,
+            18
+        );
+
+
+        context.fillRect(
+            105,
+            55,
+            46,
+            12
+        );
+
+
+        context.strokeStyle =
+            "#ffffff";
+
+
+        context.lineWidth =
+            8;
+
+
+        for (
+            const lineX of [
+                108,
+                128,
+                148
+            ]
+        ) {
+
+
+            context.beginPath();
+
+
+            context.moveTo(
+                lineX,
+                111
+            );
+
+
+            context.lineTo(
+                lineX,
+                174
+            );
+
+
+            context.stroke();
+
+        }
+
+    }
+
+
+    const texture =
+        new THREE.CanvasTexture(
+            canvas
+        );
+
+
+    texture.magFilter =
+        THREE.LinearFilter;
+
+
+    texture.minFilter =
+        THREE.LinearMipmapLinearFilter;
+
+
+    texture.anisotropy =
+        renderer.capabilities
+            .getMaxAnisotropy();
+
+
+    const logo =
+        new THREE.Mesh(
+            new THREE.PlaneGeometry(
+                0.72,
+                0.72
+            ),
+            new THREE.MeshBasicMaterial({
+                map:
+                    texture,
+                transparent:
+                    true,
+                alphaTest:
+                    0.04,
+                side:
+                    THREE.DoubleSide,
+                polygonOffset:
+                    true,
+                polygonOffsetFactor:
+                    -2
+            })
+        );
+
+
+    logo.rotation.y =
+        Math.PI;
+
+
+    logo.position.set(
+        0,
+        0.65,
+        -0.965
+    );
+
+
+    logo.renderOrder =
+        3;
+
+
+    return logo;
+
+}
+
+
 function createBin(
 
     x,
@@ -3852,6 +4314,17 @@ function createBin(
         );
 
     }
+
+
+    const categoryLogo =
+        createBinCategoryLogo(
+            type
+        );
+
+
+    group.add(
+        categoryLogo
+    );
 
 
 
@@ -4425,7 +4898,7 @@ const garbageTypes = [
     {
 
         name:
-            "PLASTIC BOTTLE",
+            "HENGDA SPRING WATER",
 
         category:
             "recyclable",
@@ -4476,7 +4949,7 @@ const garbageTypes = [
     {
 
         name:
-            "APPLE",
+            "APPLE CORE",
 
         category:
             "food",
@@ -4776,6 +5249,687 @@ function createGarbageLabel(
 
 
 /* ============================================================
+   ICED TEA CAN WRAP
+   ============================================================ */
+
+let icedTeaCanMaterialCache =
+    null;
+
+
+function createIcedTeaCanMaterials() {
+
+
+    if (
+        icedTeaCanMaterialCache
+    ) {
+
+
+        return icedTeaCanMaterialCache;
+
+    }
+
+
+    const canvas =
+        document.createElement(
+            "canvas"
+        );
+
+
+    canvas.width =
+        1024;
+
+
+    canvas.height =
+        512;
+
+
+    const context =
+        canvas.getContext(
+            "2d"
+        );
+
+
+    const background =
+        context.createLinearGradient(
+            0,
+            0,
+            0,
+            512
+        );
+
+
+    background.addColorStop(
+        0,
+        "#f8b21b"
+    );
+
+
+    background.addColorStop(
+        0.42,
+        "#e94b17"
+    );
+
+
+    background.addColorStop(
+        1,
+        "#a71918"
+    );
+
+
+    context.fillStyle =
+        background;
+
+
+    context.fillRect(
+        0,
+        0,
+        1024,
+        512
+    );
+
+
+    /* Bright diagonal ribbons remain readable while the can spins. */
+    context.fillStyle =
+        "rgba(255, 220, 58, 0.72)";
+
+
+    for (
+        let ribbonX = -220;
+        ribbonX < 1200;
+        ribbonX += 330
+    ) {
+
+
+        context.beginPath();
+
+
+        context.moveTo(
+            ribbonX,
+            512
+        );
+
+
+        context.lineTo(
+            ribbonX + 190,
+            512
+        );
+
+
+        context.lineTo(
+            ribbonX + 430,
+            0
+        );
+
+
+        context.lineTo(
+            ribbonX + 250,
+            0
+        );
+
+
+        context.closePath();
+
+
+        context.fill();
+
+    }
+
+
+    /* Lemon slice emblem. */
+    context.save();
+
+
+    context.translate(
+        770,
+        320
+    );
+
+
+    context.fillStyle =
+        "#ffe94a";
+
+
+    context.strokeStyle =
+        "#fff7a1";
+
+
+    context.lineWidth =
+        18;
+
+
+    context.beginPath();
+
+
+    context.arc(
+        0,
+        0,
+        112,
+        0,
+        Math.PI * 2
+    );
+
+
+    context.fill();
+
+
+    context.stroke();
+
+
+    context.strokeStyle =
+        "#d79d16";
+
+
+    context.lineWidth =
+        8;
+
+
+    for (
+        let segment = 0;
+        segment < 8;
+        segment++
+    ) {
+
+
+        const angle =
+            segment *
+            Math.PI /
+            4;
+
+
+        context.beginPath();
+
+
+        context.moveTo(
+            0,
+            0
+        );
+
+
+        context.lineTo(
+            Math.cos(angle) * 104,
+            Math.sin(angle) * 104
+        );
+
+
+        context.stroke();
+
+    }
+
+
+    context.restore();
+
+
+    context.textAlign =
+        "center";
+
+
+    context.textBaseline =
+        "middle";
+
+
+    context.lineJoin =
+        "round";
+
+
+    context.font =
+        "900 132px sans-serif";
+
+
+    context.lineWidth =
+        24;
+
+
+    context.strokeStyle =
+        "#7e1515";
+
+
+    context.strokeText(
+        "冰红茶",
+        430,
+        218
+    );
+
+
+    context.fillStyle =
+        "#fff8d4";
+
+
+    context.fillText(
+        "冰红茶",
+        430,
+        218
+    );
+
+
+    context.font =
+        "bold 44px monospace";
+
+
+    context.lineWidth =
+        10;
+
+
+    context.strokeText(
+        "LEMON ICED TEA",
+        405,
+        350
+    );
+
+
+    context.fillStyle =
+        "#fff4bc";
+
+
+    context.fillText(
+        "LEMON ICED TEA",
+        405,
+        350
+    );
+
+
+    const texture =
+        new THREE.CanvasTexture(
+            canvas
+        );
+
+
+    texture.wrapS =
+        THREE.RepeatWrapping;
+
+
+    texture.magFilter =
+        THREE.LinearFilter;
+
+
+    texture.minFilter =
+        THREE.LinearMipmapLinearFilter;
+
+
+    const sideMaterial =
+        new THREE.MeshStandardMaterial({
+            map:
+                texture,
+            roughness:
+                0.48,
+            metalness:
+                0.18
+        });
+
+
+    const endMaterial =
+        createMaterial(
+            0xdce2e4,
+            0.22,
+            0.86
+        );
+
+
+    icedTeaCanMaterialCache = [
+        sideMaterial,
+        endMaterial,
+        endMaterial
+    ];
+
+
+    return icedTeaCanMaterialCache;
+
+}
+
+
+let hengdaBottleLabelMaterialCache =
+    null;
+
+
+function createHengdaBottleLabelMaterial() {
+
+
+    if (
+        hengdaBottleLabelMaterialCache
+    ) {
+
+
+        return hengdaBottleLabelMaterialCache;
+
+    }
+
+
+    const canvas =
+        document.createElement(
+            "canvas"
+        );
+
+
+    canvas.width =
+        1024;
+
+
+    canvas.height =
+        512;
+
+
+    const context =
+        canvas.getContext(
+            "2d"
+        );
+
+
+    const drawLabelBase =
+        () => {
+
+
+            const skyGradient =
+                context.createLinearGradient(
+                    0,
+                    0,
+                    0,
+                    512
+                );
+
+
+            skyGradient.addColorStop(
+                0,
+                "#e8f8ff"
+            );
+
+
+            skyGradient.addColorStop(
+                0.48,
+                "#ffffff"
+            );
+
+
+            skyGradient.addColorStop(
+                1,
+                "#b6e4f4"
+            );
+
+
+            context.fillStyle =
+                skyGradient;
+
+
+            context.fillRect(
+                0,
+                0,
+                1024,
+                512
+            );
+
+
+            context.fillStyle =
+                "rgba(66, 161, 207, 0.38)";
+
+
+            context.beginPath();
+
+
+            context.moveTo(
+                0,
+                390
+            );
+
+
+            context.lineTo(
+                180,
+                185
+            );
+
+
+            context.lineTo(
+                320,
+                335
+            );
+
+
+            context.lineTo(
+                465,
+                145
+            );
+
+
+            context.lineTo(
+                655,
+                390
+            );
+
+
+            context.lineTo(
+                1024,
+                390
+            );
+
+
+            context.lineTo(
+                1024,
+                512
+            );
+
+
+            context.lineTo(
+                0,
+                512
+            );
+
+
+            context.closePath();
+
+
+            context.fill();
+
+
+            context.fillStyle =
+                "#075da7";
+
+
+            context.fillRect(
+                0,
+                416,
+                1024,
+                96
+            );
+
+
+            context.textAlign =
+                "center";
+
+
+            context.textBaseline =
+                "middle";
+
+
+            context.lineJoin =
+                "round";
+
+
+            context.font =
+                "900 112px sans-serif";
+
+
+            context.lineWidth =
+                20;
+
+
+            context.strokeStyle =
+                "#ffffff";
+
+
+            context.strokeText(
+                "恒大冰泉",
+                410,
+                218
+            );
+
+
+            context.fillStyle =
+                "#0869b4";
+
+
+            context.fillText(
+                "恒大冰泉",
+                410,
+                218
+            );
+
+
+            context.font =
+                "bold 39px sans-serif";
+
+
+            context.fillStyle =
+                "#174f75";
+
+
+            context.fillText(
+                "HENGDA SPRING WATER",
+                410,
+                310
+            );
+
+
+            context.font =
+                "bold 28px monospace";
+
+
+            context.fillStyle =
+                "#ffffff";
+
+
+            context.fillText(
+                "NATURAL MINERAL WATER",
+                510,
+                464
+            );
+
+
+            context.fillStyle =
+                "rgba(255, 255, 255, 0.96)";
+
+
+            context.beginPath();
+
+
+            context.arc(
+                824,
+                215,
+                154,
+                0,
+                Math.PI * 2
+            );
+
+
+            context.fill();
+
+
+            context.strokeStyle =
+                "#0b70b8";
+
+
+            context.lineWidth =
+                12;
+
+
+            context.stroke();
+
+        };
+
+
+    drawLabelBase();
+
+
+    const texture =
+        new THREE.CanvasTexture(
+            canvas
+        );
+
+
+    texture.wrapS =
+        THREE.RepeatWrapping;
+
+
+    texture.magFilter =
+        THREE.LinearFilter;
+
+
+    texture.minFilter =
+        THREE.LinearMipmapLinearFilter;
+
+
+    texture.anisotropy =
+        renderer.capabilities
+            .getMaxAnisotropy();
+
+
+    const portraitImage =
+        new Image();
+
+
+    portraitImage.onload =
+        () => {
+
+
+            drawLabelBase();
+
+
+            const portraitScale =
+                Math.min(
+                    300 /
+                    portraitImage.width,
+                    345 /
+                    portraitImage.height
+                );
+
+
+            const portraitWidth =
+                portraitImage.width *
+                portraitScale;
+
+
+            const portraitHeight =
+                portraitImage.height *
+                portraitScale;
+
+
+            context.drawImage(
+                portraitImage,
+                824 -
+                portraitWidth / 2,
+                390 -
+                portraitHeight,
+                portraitWidth,
+                portraitHeight
+            );
+
+
+            texture.needsUpdate =
+                true;
+
+        };
+
+
+    portraitImage.src =
+        "./assets/xu-jiayin-portrait-clear-v2.png";
+
+
+    hengdaBottleLabelMaterialCache =
+        new THREE.MeshStandardMaterial({
+            map:
+                texture,
+            roughness:
+                0.66,
+            metalness:
+                0,
+            side:
+                THREE.DoubleSide
+        });
+
+
+    return hengdaBottleLabelMaterialCache;
+
+}
+
+
+
+/* ============================================================
    CREATE GARBAGE
    ============================================================ */
 
@@ -4807,6 +5961,27 @@ function createGarbageModel(
         case "bottle": {
 
 
+            const bottleMaterial =
+                new THREE.MeshPhysicalMaterial({
+                    color:
+                        0x8edcf2,
+                    roughness:
+                        0.18,
+                    metalness:
+                        0,
+                    transparent:
+                        true,
+                    opacity:
+                        0.68,
+                    transmission:
+                        0.08,
+                    thickness:
+                        0.04,
+                    side:
+                        THREE.DoubleSide
+                });
+
+
             const body =
                 new THREE.Mesh(
 
@@ -4822,7 +5997,7 @@ function createGarbageModel(
 
                     ),
 
-                    basicMaterial
+                    bottleMaterial
 
                 );
 
@@ -4851,7 +6026,7 @@ function createGarbageModel(
 
                     ),
 
-                    basicMaterial
+                    bottleMaterial
 
                 );
 
@@ -4876,7 +6051,7 @@ function createGarbageModel(
 
                         0.1,
 
-                        12
+                        18
 
                     ),
 
@@ -4896,6 +6071,52 @@ function createGarbageModel(
             );
 
 
+            for (
+                let groove = 0;
+                groove < 8;
+                groove++
+            ) {
+
+
+                const capGroove =
+                    new THREE.Mesh(
+                        new THREE.BoxGeometry(
+                            0.018,
+                            0.085,
+                            0.018
+                        ),
+                        createMaterial(
+                            0x1d4e7c,
+                            0.62,
+                            0.02
+                        )
+                    );
+
+
+                const angle =
+                    groove *
+                    Math.PI /
+                    4;
+
+
+                capGroove.position.set(
+                    Math.cos(angle) * 0.15,
+                    0.93,
+                    Math.sin(angle) * 0.15
+                );
+
+
+                capGroove.rotation.y =
+                    -angle;
+
+
+                group.add(
+                    capGroove
+                );
+
+            }
+
+
             const shoulder =
                 new THREE.Mesh(
 
@@ -4909,7 +6130,7 @@ function createGarbageModel(
 
                     ),
 
-                    basicMaterial
+                    bottleMaterial
 
                 );
 
@@ -4925,6 +6146,67 @@ function createGarbageModel(
             group.add(
                 shoulder
             );
+
+
+            const bottleLabel =
+                new THREE.Mesh(
+                    new THREE.CylinderGeometry(
+                        0.255,
+                        0.285,
+                        0.24,
+                        32,
+                        1,
+                        true
+                    ),
+                    createHengdaBottleLabelMaterial()
+                );
+
+
+            bottleLabel.position.y =
+                0.4;
+
+
+            group.add(
+                bottleLabel
+            );
+
+
+            for (
+                const y of [
+                    0.08,
+                    0.16,
+                    0.61
+                ]
+            ) {
+
+
+                const bottleRidge =
+                    new THREE.Mesh(
+                        new THREE.TorusGeometry(
+                            y === 0.61
+                                ? 0.262
+                                : 0.285,
+                            0.012,
+                            5,
+                            18
+                        ),
+                        bottleMaterial
+                    );
+
+
+                bottleRidge.rotation.x =
+                    Math.PI / 2;
+
+
+                bottleRidge.position.y =
+                    y;
+
+
+                group.add(
+                    bottleRidge
+                );
+
+            }
 
 
             break;
@@ -4998,6 +6280,117 @@ function createGarbageModel(
             );
 
 
+            const cardboardEdgeMaterial =
+                createMaterial(
+                    0x8c582c,
+                    0.9,
+                    0
+                );
+
+
+            for (
+                const sideX of [
+                    -0.352,
+                    0.352
+                ]
+            ) {
+
+
+                const edgeSeam =
+                    new THREE.Mesh(
+                        new THREE.BoxGeometry(
+                            0.018,
+                            0.56,
+                            0.018
+                        ),
+                        cardboardEdgeMaterial
+                    );
+
+
+                edgeSeam.position.set(
+                    sideX,
+                    0.3,
+                    -0.305
+                );
+
+
+                group.add(
+                    edgeSeam
+                );
+
+            }
+
+
+            for (
+                const flapX of [
+                    -0.175,
+                    0.175
+                ]
+            ) {
+
+
+                const topFlap =
+                    new THREE.Mesh(
+                        new THREE.BoxGeometry(
+                            0.33,
+                            0.025,
+                            0.56
+                        ),
+                        basicMaterial
+                    );
+
+
+                topFlap.position.set(
+                    flapX,
+                    0.622,
+                    0
+                );
+
+
+                topFlap.rotation.z =
+                    flapX < 0
+                        ? -0.035
+                        : 0.035;
+
+
+                group.add(
+                    topFlap
+                );
+
+            }
+
+
+            const printedMark =
+                new THREE.Mesh(
+                    new THREE.RingGeometry(
+                        0.075,
+                        0.092,
+                        18
+                    ),
+                    createMaterial(
+                        0x66401f,
+                        0.9,
+                        0
+                    )
+                );
+
+
+            printedMark.position.set(
+                0.18,
+                0.32,
+                -0.306
+            );
+
+
+            printedMark.rotation.y =
+                Math.PI;
+
+
+            group.add(
+                printedMark
+            );
+
+
             break;
 
         }
@@ -5026,7 +6419,7 @@ function createGarbageModel(
 
                     ),
 
-                    basicMaterial
+                    createIcedTeaCanMaterials()
 
                 );
 
@@ -5037,6 +6430,67 @@ function createGarbageModel(
 
             group.add(
                 can
+            );
+
+
+            const canTop =
+                new THREE.Mesh(
+                    new THREE.CylinderGeometry(
+                        0.238,
+                        0.238,
+                        0.018,
+                        24
+                    ),
+                    createMaterial(
+                        0xbfc8cc,
+                        0.2,
+                        0.9
+                    )
+                );
+
+
+            canTop.position.y =
+                0.67;
+
+
+            group.add(
+                canTop
+            );
+
+
+            const pullTab =
+                new THREE.Mesh(
+                    new THREE.TorusGeometry(
+                        0.065,
+                        0.018,
+                        6,
+                        14
+                    ),
+                    createMaterial(
+                        0x7f898e,
+                        0.24,
+                        0.9
+                    )
+                );
+
+
+            pullTab.rotation.x =
+                Math.PI / 2;
+
+
+            pullTab.scale.y =
+                0.56;
+
+
+            pullTab.position.set(
+                0,
+                0.686,
+                -0.025
+            );
+
+
+            group.add(
+                pullTab
             );
 
 
@@ -5102,35 +6556,179 @@ function createGarbageModel(
         case "apple": {
 
 
-            const apple =
+            const coreProfile = [
+                new THREE.Vector2(0.2, 0.05),
+                new THREE.Vector2(0.3, 0.11),
+                new THREE.Vector2(0.24, 0.2),
+                new THREE.Vector2(0.12, 0.29),
+                new THREE.Vector2(0.1, 0.43),
+                new THREE.Vector2(0.15, 0.55),
+                new THREE.Vector2(0.27, 0.63),
+                new THREE.Vector2(0.21, 0.71)
+            ];
+
+
+            const appleCore =
                 new THREE.Mesh(
 
-                    new THREE.SphereGeometry(
-
-                        0.38,
-
-                        12,
-
-                        8
-
+                    new THREE.LatheGeometry(
+                        coreProfile,
+                        14
                     ),
 
-                    basicMaterial
+                    createMaterial(
+                        0xe7d39c,
+                        0.78,
+                        0.01
+                    )
 
                 );
 
 
-            apple.position.y =
-                0.4;
-
-
-            apple.scale.y =
-                0.92;
-
-
             group.add(
-                apple
+                appleCore
             );
+
+
+            const peelMaterial =
+                createMaterial(
+                    info.color,
+                    0.7,
+                    0.015
+                );
+
+
+            for (
+                const end of [
+                    {
+                        y: 0.08,
+                        scaleY: 0.3
+                    },
+                    {
+                        y: 0.67,
+                        scaleY: 0.26
+                    }
+                ]
+            ) {
+
+
+                const remainingApple =
+                    new THREE.Mesh(
+                        new THREE.SphereGeometry(
+                            0.31,
+                            12,
+                            8
+                        ),
+                        peelMaterial
+                    );
+
+
+                remainingApple.position.y =
+                    end.y;
+
+
+                remainingApple.scale.set(
+                    1,
+                    end.scaleY,
+                    1
+                );
+
+
+                group.add(
+                    remainingApple
+                );
+
+            }
+
+
+            for (
+                const fleshY of [
+                    0.145,
+                    0.595
+                ]
+            ) {
+
+
+                const exposedFlesh =
+                    new THREE.Mesh(
+                        new THREE.SphereGeometry(
+                            0.235,
+                            12,
+                            7
+                        ),
+                        createMaterial(
+                            0xf0dfae,
+                            0.84,
+                            0
+                        )
+                    );
+
+
+                exposedFlesh.position.y =
+                    fleshY;
+
+
+                exposedFlesh.scale.y =
+                    0.18;
+
+
+                group.add(
+                    exposedFlesh
+                );
+
+            }
+
+
+            const seedMaterial =
+                createMaterial(
+                    0x382018,
+                    0.72,
+                    0.01
+                );
+
+
+            for (
+                const side of [
+                    -1,
+                    1
+                ]
+            ) {
+
+
+                const seed =
+                    new THREE.Mesh(
+                        new THREE.SphereGeometry(
+                            0.045,
+                            7,
+                            5
+                        ),
+                        seedMaterial
+                    );
+
+
+                seed.position.set(
+                    0.08,
+                    0.38,
+                    side * 0.105
+                );
+
+
+                seed.scale.set(
+                    0.65,
+                    1.45,
+                    0.35
+                );
+
+
+                seed.rotation.z =
+                    -0.45;
+
+
+                group.add(
+                    seed
+                );
+
+            }
 
 
             const stem =
@@ -5154,54 +6752,11 @@ function createGarbageModel(
 
 
             stem.position.y =
-                0.78;
+                0.81;
 
 
             group.add(
                 stem
-            );
-
-
-            const leaf =
-                new THREE.Mesh(
-
-                    new THREE.SphereGeometry(
-
-                        0.14,
-
-                        8,
-
-                        5
-
-                    ),
-
-                    createMaterial(
-                        0x4f853c
-                    )
-
-                );
-
-
-            leaf.scale.set(
-                1.5,
-                0.25,
-                0.65
-            );
-
-
-            leaf.position.set(
-                0.12,
-                0.78,
-                0
-            );
-
-
-            leaf.rotation.z =
-                -0.35;
-
-
-            group.add(
-                leaf
             );
 
 
@@ -5407,6 +6962,41 @@ function createGarbageModel(
                         darkTip
                     );
 
+
+                    const peelSpot =
+                        new THREE.Mesh(
+                            new THREE.SphereGeometry(
+                                0.025,
+                                6,
+                                4
+                            ),
+                            createMaterial(
+                                0x8a642b,
+                                0.94,
+                                0
+                            )
+                        );
+
+
+                    peelSpot.position.copy(
+                        centers[2]
+                    );
+
+
+                    peelSpot.position.addScaledVector(
+                        direction,
+                        0.02
+                    );
+
+
+                    peelSpot.position.y +=
+                        0.025;
+
+
+                    group.add(
+                        peelSpot
+                    );
+
                 }
 
             );
@@ -5481,20 +7071,32 @@ function createGarbageModel(
         case "foodbox": {
 
 
+            const trayMaterial =
+                new THREE.MeshStandardMaterial({
+                    color:
+                        info.color,
+                    roughness:
+                        0.74,
+                    metalness:
+                        0,
+                    side:
+                        THREE.DoubleSide
+                });
+
+
             const bowl =
                 new THREE.Mesh(
 
-                    new THREE.BoxGeometry(
-
-                        0.65,
-
+                    new THREE.CylinderGeometry(
+                        0.48,
+                        0.39,
                         0.3,
-
-                        0.65
-
+                        4,
+                        1,
+                        true
                     ),
 
-                    basicMaterial
+                    trayMaterial
 
                 );
 
@@ -5503,38 +7105,153 @@ function createGarbageModel(
                 0.18;
 
 
+            bowl.rotation.y =
+                Math.PI / 4;
+
+
             group.add(
                 bowl
             );
 
 
-            const food =
+            const trayBottom =
                 new THREE.Mesh(
-
-                    new THREE.BoxGeometry(
-
-                        0.45,
-
-                        0.18,
-
-                        0.45
-
+                    new THREE.CylinderGeometry(
+                        0.39,
+                        0.39,
+                        0.035,
+                        4
                     ),
-
-                    createMaterial(
-                        0xf0e2aa
-                    )
+                    trayMaterial
 
                 );
 
 
-            food.position.y =
-                0.42;
+            trayBottom.position.y =
+                0.035;
+
+
+            trayBottom.rotation.y =
+                Math.PI / 4;
 
 
             group.add(
-                food
+                trayBottom
             );
+
+
+            const riceMaterial =
+                createMaterial(
+                    0xf3e7bd,
+                    0.9,
+                    0
+                );
+
+
+            for (
+                let grain = 0;
+                grain < 9;
+                grain++
+            ) {
+
+
+                const riceGrain =
+                    new THREE.Mesh(
+                        new THREE.SphereGeometry(
+                            0.075,
+                            7,
+                            5
+                        ),
+                        riceMaterial
+                    );
+
+
+                const grainAngle =
+                    grain * 2.4;
+
+
+                const grainRadius =
+                    0.08 +
+                    (
+                        grain % 3
+                    ) * 0.075;
+
+
+                riceGrain.position.set(
+                    Math.cos(grainAngle) * grainRadius,
+                    0.36 +
+                    (
+                        grain % 2
+                    ) * 0.035,
+                    Math.sin(grainAngle) * grainRadius
+                );
+
+
+                riceGrain.scale.set(
+                    1.35,
+                    0.55,
+                    0.72
+                );
+
+
+                riceGrain.rotation.y =
+                    grainAngle;
+
+
+                group.add(
+                    riceGrain
+                );
+
+            }
+
+
+            for (
+                const garnish of [
+                    {
+                        color: 0x5d9d43,
+                        x: -0.18,
+                        z: 0.12
+                    },
+                    {
+                        color: 0xd85a38,
+                        x: 0.17,
+                        z: -0.1
+                    }
+                ]
+            ) {
+
+
+                const vegetable =
+                    new THREE.Mesh(
+                        new THREE.BoxGeometry(
+                            0.13,
+                            0.07,
+                            0.1
+                        ),
+                        createMaterial(
+                            garnish.color,
+                            0.82,
+                            0
+                        )
+                    );
+
+
+                vegetable.position.set(
+                    garnish.x,
+                    0.42,
+                    garnish.z
+                );
+
+
+                vegetable.rotation.y =
+                    garnish.x * 2;
+
+
+                group.add(
+                    vegetable
+                );
+
+            }
 
 
             const lid =
@@ -5570,7 +7287,15 @@ function createGarbageModel(
 
 
             lid.position.y =
-                0.53;
+                0.51;
+
+
+            lid.position.z =
+                0.05;
+
+
+            lid.rotation.x =
+                -0.12;
 
 
             group.add(
@@ -5684,6 +7409,114 @@ function createGarbageModel(
             );
 
 
+            const batteryBand =
+                new THREE.Mesh(
+                    new THREE.CylinderGeometry(
+                        0.204,
+                        0.204,
+                        0.28,
+                        16,
+                        1,
+                        true
+                    ),
+                    createMaterial(
+                        0x24282a,
+                        0.62,
+                        0.12
+                    )
+                );
+
+
+            batteryBand.position.y =
+                0.36;
+
+
+            group.add(
+                batteryBand
+            );
+
+
+            const polarityMaterial =
+                createMaterial(
+                    0xf4f1df,
+                    0.7,
+                    0
+                );
+
+
+            const plusV =
+                new THREE.Mesh(
+                    new THREE.BoxGeometry(
+                        0.035,
+                        0.14,
+                        0.018
+                    ),
+                    polarityMaterial
+                );
+
+
+            plusV.position.set(
+                0,
+                0.4,
+                0.207
+            );
+
+
+            group.add(
+                plusV
+            );
+
+
+            const plusH =
+                new THREE.Mesh(
+                    new THREE.BoxGeometry(
+                        0.13,
+                        0.035,
+                        0.018
+                    ),
+                    polarityMaterial
+                );
+
+
+            plusH.position.copy(
+                plusV.position
+            );
+
+
+            group.add(
+                plusH
+            );
+
+
+            const batteryTopRing =
+                new THREE.Mesh(
+                    new THREE.TorusGeometry(
+                        0.17,
+                        0.018,
+                        5,
+                        16
+                    ),
+                    createMaterial(
+                        0xaab1b4,
+                        0.24,
+                        0.86
+                    )
+                );
+
+
+            batteryTopRing.rotation.x =
+                Math.PI / 2;
+
+
+            batteryTopRing.position.y =
+                0.765;
+
+
+            group.add(
+                batteryTopRing
+            );
+
+
             break;
 
         }
@@ -5695,6 +7528,25 @@ function createGarbageModel(
            ==================================================== */
 
         case "medicine": {
+
+
+            const medicineGlass =
+                new THREE.MeshPhysicalMaterial({
+                    color:
+                        0x9b5529,
+                    roughness:
+                        0.3,
+                    metalness:
+                        0,
+                    transparent:
+                        true,
+                    opacity:
+                        0.84,
+                    transmission:
+                        0.06,
+                    side:
+                        THREE.DoubleSide
+                });
 
 
             const bottle =
@@ -5712,7 +7564,7 @@ function createGarbageModel(
 
                     ),
 
-                    basicMaterial
+                    medicineGlass
 
                 );
 
@@ -5723,6 +7575,51 @@ function createGarbageModel(
 
             group.add(
                 bottle
+            );
+
+
+            const medicineShoulder =
+                new THREE.Mesh(
+                    new THREE.SphereGeometry(
+                        0.235,
+                        14,
+                        7
+                    ),
+                    medicineGlass
+                );
+
+
+            medicineShoulder.scale.y =
+                0.35;
+
+
+            medicineShoulder.position.y =
+                0.61;
+
+
+            group.add(
+                medicineShoulder
+            );
+
+
+            const medicineNeck =
+                new THREE.Mesh(
+                    new THREE.CylinderGeometry(
+                        0.15,
+                        0.17,
+                        0.12,
+                        14
+                    ),
+                    medicineGlass
+                );
+
+
+            medicineNeck.position.y =
+                0.67;
+
+
+            group.add(
+                medicineNeck
             );
 
 
@@ -5756,6 +7653,81 @@ function createGarbageModel(
 
             group.add(
                 medicineCap
+            );
+
+
+            for (
+                let capRidge = 0;
+                capRidge < 10;
+                capRidge++
+            ) {
+
+
+                const ridge =
+                    new THREE.Mesh(
+                        new THREE.BoxGeometry(
+                            0.014,
+                            0.12,
+                            0.018
+                        ),
+                        createMaterial(
+                            0xbec3c5,
+                            0.62,
+                            0.08
+                        )
+                    );
+
+
+                const ridgeAngle =
+                    capRidge *
+                    Math.PI * 2 /
+                    10;
+
+
+                ridge.position.set(
+                    Math.cos(ridgeAngle) * 0.2,
+                    0.7,
+                    Math.sin(ridgeAngle) * 0.2
+                );
+
+
+                ridge.rotation.y =
+                    -ridgeAngle;
+
+
+                group.add(
+                    ridge
+                );
+
+            }
+
+
+            const medicineLabel =
+                new THREE.Mesh(
+                    new THREE.CylinderGeometry(
+                        0.237,
+                        0.252,
+                        0.34,
+                        18,
+                        1,
+                        true,
+                        -0.95,
+                        1.9
+                    ),
+                    createMaterial(
+                        0xf4f1e8,
+                        0.76,
+                        0
+                    )
+                );
+
+
+            medicineLabel.position.y =
+                0.34;
+
+
+            group.add(
+                medicineLabel
             );
 
 
@@ -5846,17 +7818,24 @@ function createGarbageModel(
         case "bulb": {
 
 
+            const bulbProfile = [
+                new THREE.Vector2(0.15, 0.25),
+                new THREE.Vector2(0.22, 0.31),
+                new THREE.Vector2(0.31, 0.42),
+                new THREE.Vector2(0.36, 0.58),
+                new THREE.Vector2(0.33, 0.74),
+                new THREE.Vector2(0.23, 0.88),
+                new THREE.Vector2(0.08, 0.96),
+                new THREE.Vector2(0, 0.98)
+            ];
+
+
             const bulb =
                 new THREE.Mesh(
 
-                    new THREE.SphereGeometry(
-
-                        0.35,
-
-                        14,
-
-                        10
-
+                    new THREE.LatheGeometry(
+                        bulbProfile,
+                        20
                     ),
 
                     new THREE.MeshStandardMaterial({
@@ -5880,23 +7859,112 @@ function createGarbageModel(
                             0x5a4b0b,
 
                         emissiveIntensity:
-                            0.18
+                            0.12,
+
+                        side:
+                            THREE.DoubleSide
 
                     })
 
                 );
 
 
-            bulb.position.y =
-                0.55;
+            group.add(
+                bulb
+            );
 
 
-            bulb.scale.y =
-                1.08;
+            const filamentMaterial =
+                createMaterial(
+                    0x5f3b16,
+                    0.45,
+                    0.38
+                );
+
+
+            for (
+                const supportX of [
+                    -0.07,
+                    0.07
+                ]
+            ) {
+
+
+                const filamentSupport =
+                    new THREE.Mesh(
+                        new THREE.CylinderGeometry(
+                            0.012,
+                            0.012,
+                            0.34,
+                            6
+                        ),
+                        filamentMaterial
+                    );
+
+
+                filamentSupport.position.set(
+                    supportX,
+                    0.43,
+                    0
+                );
+
+
+                group.add(
+                    filamentSupport
+                );
+
+            }
+
+
+            const filament =
+                new THREE.Mesh(
+                    new THREE.TorusGeometry(
+                        0.07,
+                        0.012,
+                        5,
+                        12,
+                        Math.PI
+                    ),
+                    filamentMaterial
+                );
+
+
+            filament.position.y =
+                0.59;
 
 
             group.add(
-                bulb
+                filament
+            );
+
+
+            const glassNeck =
+                new THREE.Mesh(
+                    new THREE.CylinderGeometry(
+                        0.15,
+                        0.17,
+                        0.1,
+                        16
+                    ),
+                    new THREE.MeshStandardMaterial({
+                        color:
+                            info.color,
+                        roughness:
+                            0.2,
+                        transparent:
+                            true,
+                        opacity:
+                            0.7
+                    })
+                );
+
+
+            glassNeck.position.y =
+                0.25;
+
+
+            group.add(
+                glassNeck
             );
 
 
@@ -5994,73 +8062,224 @@ function createGarbageModel(
         case "tissue": {
 
 
-            const box =
-                new THREE.Mesh(
+            const tissueMaterial =
+                new THREE.MeshStandardMaterial({
+                    color:
+                        0xf4f2e9,
+                    roughness:
+                        0.98,
+                    metalness:
+                        0,
+                    side:
+                        THREE.DoubleSide
+                });
 
-                    new THREE.DodecahedronGeometry(
 
-                        0.38,
+            const tissueLayers = [
+                {
+                    width: 0.82,
+                    height: 0.56,
+                    y: 0.055,
+                    rotation: -0.18,
+                    phase: 0.3
+                },
+                {
+                    width: 0.72,
+                    height: 0.62,
+                    y: 0.105,
+                    rotation: 0.34,
+                    phase: 1.7
+                },
+                {
+                    width: 0.66,
+                    height: 0.5,
+                    y: 0.16,
+                    rotation: -0.48,
+                    phase: 3.1
+                }
+            ];
 
-                        1
 
-                    ),
+            for (
+                const layer of
+                tissueLayers
+            ) {
 
-                    basicMaterial
 
+                const geometry =
+                    new THREE.PlaneGeometry(
+                        layer.width,
+                        layer.height,
+                        6,
+                        5
+                    );
+
+
+                const positions =
+                    geometry.attributes.position;
+
+
+                for (
+                    let vertex = 0;
+                    vertex < positions.count;
+                    vertex++
+                ) {
+
+
+                    const x =
+                        positions.getX(
+                            vertex
+                        );
+
+
+                    const y =
+                        positions.getY(
+                            vertex
+                        );
+
+
+                    const wrinkle =
+                        Math.sin(
+                            x * 17 +
+                            layer.phase
+                        ) *
+                        0.035 +
+                        Math.cos(
+                            y * 21 -
+                            layer.phase
+                        ) *
+                        0.026 +
+                        Math.sin(
+                            (
+                                x + y
+                            ) * 14
+                        ) *
+                        0.018;
+
+
+                    positions.setZ(
+                        vertex,
+                        wrinkle
+                    );
+
+                }
+
+
+                positions.needsUpdate =
+                    true;
+
+
+                geometry.computeVertexNormals();
+
+
+                const tissueLayer =
+                    new THREE.Mesh(
+                        geometry,
+                        tissueMaterial
+                    );
+
+
+                tissueLayer.position.y =
+                    layer.y;
+
+
+                tissueLayer.rotation.set(
+                    -Math.PI / 2,
+                    0,
+                    layer.rotation
                 );
 
 
-            box.position.y =
-                0.24;
+                group.add(
+                    tissueLayer
+                );
+
+            }
 
 
-            box.scale.set(
-                1.15,
-                0.62,
-                0.9
+            /* A raised folded corner makes it read as paper, not a blob. */
+            const foldedGeometry =
+                new THREE.PlaneGeometry(
+                    0.48,
+                    0.5,
+                    5,
+                    6
+                );
+
+
+            const foldedPositions =
+                foldedGeometry.attributes.position;
+
+
+            for (
+                let vertex = 0;
+                vertex < foldedPositions.count;
+                vertex++
+            ) {
+
+
+                const x =
+                    foldedPositions.getX(
+                        vertex
+                    );
+
+
+                const y =
+                    foldedPositions.getY(
+                        vertex
+                    );
+
+
+                foldedPositions.setZ(
+                    vertex,
+                    Math.sin(
+                        x * 20
+                    ) * 0.035 +
+                    Math.cos(
+                        y * 17
+                    ) * 0.025
+                );
+
+            }
+
+
+            foldedPositions.needsUpdate =
+                true;
+
+
+            foldedGeometry.computeVertexNormals();
+
+
+            const foldedCorner =
+                new THREE.Mesh(
+                    foldedGeometry,
+                    tissueMaterial
+                );
+
+
+            foldedCorner.position.set(
+                0.06,
+                0.33,
+                -0.04
+            );
+
+
+            foldedCorner.rotation.set(
+                -0.35,
+                -0.42,
+                0.18
+            );
+
+
+            foldedCorner.scale.set(
+                0.92,
+                0.82,
+                1
             );
 
 
             group.add(
-                box
-            );
-
-
-            const paper =
-                new THREE.Mesh(
-
-                    new THREE.DodecahedronGeometry(
-
-                        0.25,
-
-                        1
-
-                    ),
-
-                    createMaterial(
-                        0xffffff
-                    )
-
-                );
-
-
-            paper.position.y =
-                0.47;
-
-
-            paper.scale.set(
-                0.75,
-                1.25,
-                0.35
-            );
-
-
-            paper.rotation.z =
-                0.15;
-
-
-            group.add(
-                paper
+                foldedCorner
             );
 
 
@@ -6172,21 +8391,90 @@ function createGarbageModel(
             );
 
 
+            const innerCup =
+                new THREE.Mesh(
+                    new THREE.CylinderGeometry(
+                        0.265,
+                        0.235,
+                        0.48,
+                        18,
+                        1,
+                        true
+                    ),
+                    new THREE.MeshStandardMaterial({
+                        color:
+                            0xcac6ba,
+                        roughness:
+                            0.82,
+                        metalness:
+                            0.01,
+                        side:
+                            THREE.BackSide
+                    })
+                );
+
+
+            innerCup.position.y =
+                0.31;
+
+
+            group.add(
+                innerCup
+            );
+
+
+            const cupStain =
+                new THREE.Mesh(
+                    new THREE.RingGeometry(
+                        0.12,
+                        0.19,
+                        20
+                    ),
+                    createMaterial(
+                        0x8a6748,
+                        0.92,
+                        0
+                    )
+                );
+
+
+            cupStain.rotation.x =
+                -Math.PI / 2;
+
+
+            cupStain.position.y =
+                0.075;
+
+
+            group.add(
+                cupStain
+            );
+
+
+            const handleCurve =
+                new THREE.CatmullRomCurve3(
+                    [
+                        new THREE.Vector3(0.27, 0.5, 0),
+                        new THREE.Vector3(0.5, 0.5, 0),
+                        new THREE.Vector3(0.59, 0.34, 0),
+                        new THREE.Vector3(0.52, 0.15, 0),
+                        new THREE.Vector3(0.27, 0.14, 0)
+                    ],
+                    false,
+                    "catmullrom",
+                    0.28
+                );
+
+
             const handle =
                 new THREE.Mesh(
 
-                    new THREE.TorusGeometry(
-
-                        0.22,
-
-                        0.06,
-
+                    new THREE.TubeGeometry(
+                        handleCurve,
+                        28,
+                        0.055,
                         8,
-
-                        16,
-
-                        Math.PI
-
+                        false
                     ),
 
                     basicMaterial
@@ -6194,62 +8482,9 @@ function createGarbageModel(
                 );
 
 
-            handle.position.set(
-
-                0.29,
-
-                0.32,
-
-                0
-
-            );
-
-
-            handle.rotation.z =
-                -Math.PI / 2;
-
-
             group.add(
                 handle
             );
-
-
-            for (
-
-                const connectorY of [
-                    0.1,
-                    0.54
-                ]
-
-            ) {
-
-
-                const handleConnector =
-                    new THREE.Mesh(
-
-                        new THREE.BoxGeometry(
-                            0.13,
-                            0.09,
-                            0.11
-                        ),
-
-                        basicMaterial
-
-                    );
-
-
-                handleConnector.position.set(
-                    0.31,
-                    connectorY,
-                    0
-                );
-
-
-                group.add(
-                    handleConnector
-                );
-
-            }
 
 
             break;
@@ -6310,20 +8545,15 @@ function createGarbageModel(
    ============================================================ */
 
 const INITIAL_TIME =
-    10;
+    20;
 
 
 const TIME_DECREASE =
-    0.2;
+    1;
 
 
 const MIN_TIME =
     5;
-
-
-const ITEM_LIFETIME =
-    20;
-
 
 
 /* ============================================================
@@ -6339,6 +8569,10 @@ let score =
 
 
 let wasteCount =
+    0;
+
+
+let correctSortCount =
     0;
 
 
@@ -6999,7 +9233,7 @@ function getReactionTime() {
 
         INITIAL_TIME -
 
-        wasteCount *
+        correctSortCount *
         TIME_DECREASE
 
     );
@@ -7157,7 +9391,7 @@ function spawnGarbage() {
 
 
     garbageTimeLimit =
-        ITEM_LIFETIME;
+        getReactionTime();
 
 
     garbageSpawnTime =
@@ -11366,6 +13600,13 @@ function resolveBin(
     ) {
 
 
+        correctSortCount++;
+
+
+        garbageTimeLimit =
+            getReactionTime();
+
+
         combo++;
 
 
@@ -11755,6 +13996,10 @@ function startGame() {
 
 
     wasteCount =
+        0;
+
+
+    correctSortCount =
         0;
 
 
@@ -12808,6 +15053,15 @@ function updateThrownGarbage(
     ) {
 
 
+        const collidedBin =
+            bins.find(
+                bin =>
+                    bin.collisionMeshes.includes(
+                        collision.mesh
+                    )
+            ) || null;
+
+
         thrownGarbage.position
             .copy(
                 collision.point
@@ -12881,7 +15135,78 @@ function updateThrownGarbage(
             );
 
 
+        /*
+            Bin rims and open lids are not resting surfaces. If
+            an item loses most of its speed on the upper frame,
+            slide it toward the real opening so it cannot freeze
+            or jitter forever on top of the bin.
+        */
+        const hitBinTop =
+            collidedBin &&
+            collision.point.y >=
+            collidedBin.interiorMaxY -
+            0.2;
+
+
+        if (
+            hitBinTop &&
+            Math.hypot(
+                projectileVelocity.x,
+                projectileVelocity.z
+            ) < 1.6
+        ) {
+
+
+            const slideDirection =
+                new THREE.Vector3(
+                    collidedBin.center.x -
+                    thrownGarbage.position.x,
+                    0,
+                    collidedBin.center.z -
+                    thrownGarbage.position.z
+                );
+
+
+            if (
+                slideDirection.lengthSq() <
+                0.0001
+            ) {
+
+
+                slideDirection.set(
+                    0,
+                    0,
+                    -1
+                );
+
+            }
+
+
+            slideDirection.normalize();
+
+
+            projectileVelocity.x +=
+                slideDirection.x *
+                1.8;
+
+
+            projectileVelocity.z +=
+                slideDirection.z *
+                1.8;
+
+
+            projectileVelocity.y =
+                Math.max(
+                    projectileVelocity.y,
+                    0.48
+                );
+
+        }
+
+
         const shouldSettle =
+
+            !collidedBin &&
 
             collision.normal.y > 0.65 &&
 
